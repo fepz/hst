@@ -295,7 +295,7 @@ void vSchedulerLogicAddTask( struct TaskInfo * pxTask )
 	listSET_LIST_ITEM_OWNER( &( pxTask->xReadyListItem ), pxTask );
 	listSET_LIST_ITEM_VALUE( &( pxTask->xReadyListItem ), pxTask->xPriority );
 
-	/* Add the task to the correct appropiate task list. */
+	/* Add the task to the appropriate task list. */
 	if( pxTask->xPeriod > 0U )
 	{
 		/* Periodic task. */
