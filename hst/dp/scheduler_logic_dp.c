@@ -211,6 +211,7 @@ void vSchedulerTaskSchedulerLogic( struct TaskInfo **pxCurrentTask )
 		*pxCurrentTask = ( struct TaskInfo * ) listGET_OWNER_OF_HEAD_ENTRY( pxReadyTasksListC );
 	}
 
+	/* Resume the execution of the selected task. */
 	if( *pxCurrentTask != NULL )
 	{
 		vTaskResume( ( *pxCurrentTask )->xHandle );
