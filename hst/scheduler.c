@@ -76,7 +76,11 @@ BaseType_t xSchedulerTaskCreate( TaskFunction_t pxTaskCode, const char * const p
 		pxTaskInfo->uxReleaseCount = 0;
 		pxTaskInfo->xCur = 0;
 		pxTaskInfo->xFinished = 0;
-
+        
+        /* Initialize list items elements in the TBCe. */
+        vListInitialiseItem( &( pxTaskInfo->xGenericListItem ) );
+        vListInitialiseItem( &( pxTaskInfo->xReadyListItem ) );	
+        
 		/* Create the FreeRTOS task. */
 		xRslt = xTaskCreate( pxTaskCode, pcName, usStackDepth, pxTaskInfo, TASK_PRIORITY, &( pxTaskInfo->xHandle ) );
 
