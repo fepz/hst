@@ -114,7 +114,6 @@ void vSchedulerLogicRemoveTaskFromReadyList( struct TaskInfo *xTask )
 void vSchedulerLogicAddTask( struct TaskInfo * pxTask )
 {
 	/* Initialize the task's ready item list. */
-	vListInitialiseItem( &( pxTask->xReadyListItem ) );
 	listSET_LIST_ITEM_OWNER( &( pxTask->xReadyListItem ), pxTask );
 	listSET_LIST_ITEM_VALUE( &( pxTask->xReadyListItem ), pxTask->xDeadline );
 
