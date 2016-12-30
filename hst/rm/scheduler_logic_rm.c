@@ -9,6 +9,8 @@ extern void vSchedulerDeadlineMissHook( struct TaskInfo * xTask, const TickType_
 /* Ready tasks list. */
 List_t xReadyTasksList;
 List_t * pxReadyTasksList = NULL;
+
+/* Used for wcrt calculation. */
 List_t * pxAllTasksList = NULL;
 
 /**
@@ -113,9 +115,8 @@ void vSchedulerLogicRemoveTaskFromReadyList( struct TaskInfo *xTask )
 void vSchedulerLogicAddTask( struct TaskInfo * pxTask )
 {
 	/* Initialize the task's ready item list. */
-	vListInitialiseItem( &( pxTask->xReadyListItem ) );
 	listSET_LIST_ITEM_OWNER( &( pxTask->xReadyListItem ), pxTask );
-	listSET_LIST_ITEM_VALUE( &( pxTask->xReadyListItem ), pxTask->xPriority );
+    listSET_LIST_ITEM_VALUE( &( pxTask->xReadyListItem ), pxTask->xPeriod );
 
 	/* Add the task to the task list. */
 	vListInsert( pxReadyTasksList, &( pxTask->xReadyListItem ) );
