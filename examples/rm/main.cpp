@@ -48,6 +48,7 @@ int main() {
 	vSchedulerInit();
 
 	/* The execution should never reach here. */
+    for(;;);
 }
 
 /**
