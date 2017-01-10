@@ -79,13 +79,13 @@ void vSchedulerTaskSchedulerLogic( struct TaskInfo **pxCurrentTask )
 	/* Check if the current release of the periodic task has finished. */
 	if( *pxCurrentTask != NULL )
 	{
-		if( listIS_CONTAINED_WITHIN( pxReadyTasksList, &( ( *pxCurrentTask )->xReadyListItem ) ) == pdFALSE )
+        if( ( *pxCurrentTask )->xFinished == pdTRUE )
 		{
 			*pxCurrentTask = NULL;
 		}
 	}
 
-	/* Periodic task scheduling -- resume the execution of the first task in the ready list, if any. */
+	/* Periodic task scheduling -- resume the execution of the first task in the ready list, if any. */    
 	if( listLIST_IS_EMPTY( pxReadyTasksList ) == pdFALSE )
 	{
 		*pxCurrentTask = ( struct TaskInfo * ) listGET_OWNER_OF_HEAD_ENTRY( pxReadyTasksList );

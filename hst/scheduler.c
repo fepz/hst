@@ -75,7 +75,7 @@ BaseType_t xSchedulerTaskCreate( TaskFunction_t pxTaskCode, const char * const p
 		pxTaskInfo->xWcrt = 0;
 		pxTaskInfo->uxReleaseCount = 0;
 		pxTaskInfo->xCur = 0;
-		pxTaskInfo->xFinished = 0;
+		pxTaskInfo->xFinished = pdFALSE;
         
         /* Initialize list items elements in the TBCe. */
         vListInitialiseItem( &( pxTaskInfo->xGenericListItem ) );
@@ -172,7 +172,7 @@ extern void vSchedulerTaskDelay( void )
 		/* Wake up the scheduler task only if is an application scheduled task. */
 		if( xCurrentTask->xHandle == xTaskGetCurrentTaskHandle() )
 		{
-			xCurrentTask->xFinished = 1;
+			xCurrentTask->xFinished = pdTRUE;
 
 			/* A vTaskDelayUntil() or vTaskDelay() invocation terminates the
 			 * current release of the task. */
@@ -219,7 +219,7 @@ extern void vSchedulerTaskSuspend( void* pxTask )
 		{
 			if( xCurrentTask->xHandle == ( TaskHandle_t ) pxTask )
 			{
-				xCurrentTask->xFinished = 1;
+				xCurrentTask->xFinished = pdTRUE;
 
 				vSchedulerLogicRemoveTaskFromReadyList( xCurrentTask );
 
@@ -263,7 +263,7 @@ extern void vSchedulerTaskReady( void* pxTask )
 
 		if( pxTaskInfo != NULL )
 		{
-			if( pxTaskInfo->xFinished == 1 )
+			if( pxTaskInfo->xFinished == pdTRUE )
 			{
 				/* If pxTask is a new instance, update the absolute deadline of
 				 * the release, reset the CPU counter and increment the release
@@ -271,7 +271,7 @@ extern void vSchedulerTaskReady( void* pxTask )
 				 */
 				pxTaskInfo->xAbsolutDeadline = pxTaskInfo->xRelease + pxTaskInfo->xDeadline;
 				pxTaskInfo->uxReleaseCount = pxTaskInfo->uxReleaseCount + 1;
-				pxTaskInfo->xFinished = 0;
+				pxTaskInfo->xFinished = pdFALSE;
 				pxTaskInfo->xCur = 0;
 
 				/* Add the task to the appropriate ready list. */
